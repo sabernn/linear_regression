@@ -1,6 +1,6 @@
 
 ######## TITLE ########
-# CSC 7333 Programming Assignment
+# CSC 7333 Programming Assignment - Part (a)
 # Instructor: Dr. Jianhua Chen
 # Developed by: Saber Nemati
 # email: mnemat2@lsu.edu
