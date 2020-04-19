@@ -18,23 +18,29 @@ def loss_func(inp,out,theta):
     m=len(inp)
     J=0
     for i in range(m):
-        J+=(theta[0]+theta[1]*inp[i]-out[i])**2
+        y_hat=theta[0]+theta[1]*inp[i]
+        y=out[i]
+        J+=(y_hat-y)**2
 
     return J/2/m
 
 # Declaring the update term function
-def loss_func_der(inp,out,theta):
+def loss_func_der(inp,out,theta,alpha):
     m=len(inp)
-    dJ=0
+    dJ=[0,0]
+    
     for i in range(m):
-        dJ+=(-theta[0]-theta[1]*inp[i]+out[i])
+        y_hat=theta[0]+theta[1]*inp[i]
+        y=out[i]
+        dJ[0]+=alpha*(y-y_hat)*1/m
+        dJ[1]+=alpha*(y-y_hat)*x[i]/m
 
-    return dJ/m
+    return dJ
 
 
 ########     INPUT DATA    ########
 # Number of iterations
-n=15
+n=50
 # Learning rate
 alpha=0.01
 ######## END OF INPUT DATA ########
@@ -71,23 +77,15 @@ else:
 
 # Implementing Gradient Descent
 m=len(x)
-theta=[100,-10]
+theta=[0,0]
 J=[]
 for iter in range(n):
-    for i in range(m):
-        theta[0]+=alpha*loss_func_der(x,y,theta)*1
-        # print(loss_func_der(x,y,theta))
-        theta[1]+=alpha*loss_func_der(x,y,theta)*x[i]
+    theta[0]+=loss_func_der(x,y,theta,alpha)[0]
+    theta[1]+=loss_func_der(x,y,theta,alpha)[1]
 
-    print(theta)
     J.append(loss_func(x,y,theta))
 
 print(loss_func(x,y,theta))
-x1=np.array(x)
-y1=np.array(y)
-
-x1t=np.transpose(x1)
-print(x1t.dot(y1))
 
 
 
@@ -97,10 +95,13 @@ plt.subplot(121)
 plt.plot(x,y,'bx')
 plt.xlabel('House living areas in 1000 square feet')
 plt.ylabel('House prices in 10,000 dollars')
+plt.grid(axis='both')
 
 
 # Plotting loss function vs 
 plt.subplot(122)
 plt.plot(range(1,n+1),J)
-
+plt.xlabel('Iterations')
+plt.ylabel('Loss value (J)')
+plt.grid(axis='both')
 plt.show()
