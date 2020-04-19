@@ -1,5 +1,7 @@
 
 ######## TITLE ########
+# CSC 7333 Programming Assignment
+# Instructor: Dr. Jianhua Chen
 # Developed by: Saber Nemati
 # email: mnemat2@lsu.edu
 
@@ -24,4 +26,12 @@ with open('data//KCSmall2.csv', newline='') as f:
 # print(type(x[0]))
 # print(x)
 
-dir(plt)
+# print(dir(plt))
+
+
+######## PLOTTING ########
+plt.plot(x,y,'bx')
+plt.xlabel('House living areas in 1000 square feet')
+plt.ylabel('House prices in 10,000 dollars')
+plt.show()
+
