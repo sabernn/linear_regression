@@ -1,6 +1,6 @@
 
 ######## TITLE ########
-# CSC 7333 Programming Assignment - Part (a)
+# CSC 7333 Programming Assignment - Part (b)
 # Instructor: Dr. Jianhua Chen
 # Developed by: Saber Nemati
 # email: mnemat2@lsu.edu
@@ -15,7 +15,7 @@ alpha=0.1
 
 
 # Importing packages
-# import numpy as np
+import numpy as np
 import csv
 import matplotlib.pyplot as plt
 
@@ -45,17 +45,49 @@ def loss_func_der(inp,out,theta,alpha):
     return dJ
 
 
+# Declaring standardization function
+def standardize(x):
+    m=np.average(x)
+    std=np.std(x)
 
+    return (x-m)/std
+
+
+# Declaring normalization function
+def normalize(x):
+    xmin=np.min(x)
+    xmax=np.max(x)
+
+    return (x-xmin)/(xmax-xmin)
 
 # Initializing input and output vectors
-x=[]
+x1=[]
+x2=[]
+x3=[]
 y=[]
 # Importing data
-with open('data//KCSmall2.csv', newline='') as f:
+with open('data//KCSmall_NS2.csv', newline='') as f:
     reader = csv.reader(f)
     for row in reader:
-        x.append(float(row[0]))
-        y.append(float(row[1]))
+        x1.append(float(row[0]))
+        x2.append(float(row[1]))
+        x3.append(float(row[2]))
+        y.append(float(row[3]))
+
+
+# Print first 5 rows of the raw input data
+print("First 5 rows of raw input data are: ")
+for i in range(5):
+    print("{0}\t{1}\t{2}\t{3}".format(x1[i],x2[i],x3[i],y[i]))
+
+# Print out the first 5 rows of normalized data
+x1n=normalize(x1)
+x2n=normalize(x2)
+x3n=normalize(x3)
+yn=normalize(y)
+print("First 5 rows of normalized data are: ")
+for i in range(5):
+    print("{0}\t{1}\t{2}\t{3}".format(x1n[i],x2n[i],x3n[i],yn[i]))
 
 
 # Checking the loss function implementation
