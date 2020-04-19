@@ -6,9 +6,16 @@
 # email: mnemat2@lsu.edu
 
 
+########     INPUT DATA    ########
+# Number of iterations
+n=50
+# Learning rate
+alpha=0.1
+######## END OF INPUT DATA ########
+
+
 # Importing packages
-import numpy as np
-import pandas as pd
+# import numpy as np
 import csv
 import matplotlib.pyplot as plt
 
@@ -38,13 +45,6 @@ def loss_func_der(inp,out,theta,alpha):
     return dJ
 
 
-########     INPUT DATA    ########
-# Number of iterations
-n=50
-# Learning rate
-alpha=0.01
-######## END OF INPUT DATA ########
-
 
 
 # Initializing input and output vectors
@@ -57,36 +57,46 @@ with open('data//KCSmall2.csv', newline='') as f:
         x.append(float(row[0]))
         y.append(float(row[1]))
 
-# print(type(x[0]))
-# print(x)
 
 # Checking the loss function implementation
 theta1=[0,0]
 theta2=[-1,20]
 
 if abs(loss_func(x,y,theta1)-1806.551)<0.001:
-    print("***PASS***: Loss function check for theta1=(0,0) passed!")
+    print("***PASS***: Loss function implementation check for theta1=(0,0) passed!")
 else:
-    print("***FAIL***: Loss function check for theta1=(0,0) failed!")
+    print("***FAIL***: Loss function implementation check for theta1=(0,0) failed!")
 
 if abs(loss_func(x,y,theta2)-330.099)<0.001:
-    print("***PASS***: Loss function check for theta2=(-1,20) passed!")
+    print("***PASS***: Loss function implementation check for theta2=(-1,20) passed!")
 else:
-    print("***FAIL***: Loss function check for theta1=(-1,20) failed!")
+    print("***FAIL***: Loss function implementation check for theta1=(-1,20) failed!")
 
 
 # Implementing Gradient Descent
 m=len(x)
-theta=[0,0]
+theta=[100,100]
 J=[]
+print("----------------------------------------------------")
+print("Theta \t\t\t Loss Function (J)")
+print("----------------------------------------------------")
 for iter in range(n):
     theta[0]+=loss_func_der(x,y,theta,alpha)[0]
     theta[1]+=loss_func_der(x,y,theta,alpha)[1]
 
-    J.append(loss_func(x,y,theta))
+    # Printing the values of theta and J for each iteration
+    Jtemp=loss_func(x,y,theta)
+    J.append(Jtemp)
+    theta_r=[round(theta[0],5),round(theta[1],5)]
+    Jtemp=round(Jtemp,5)
+    print("{0} \t\t {1}".format(theta_r,Jtemp))
+print("----------------------------------------------------")
 
-print(loss_func(x,y,theta))
-
+xtest=[3.5,7]
+for t in xtest:
+    liv_area=t*1000
+    price=(theta[0]+theta[1]*t)*10000
+    print("Aproximate house prices for {0} square feet living area is: ${1}".format(liv_area,price))
 
 
 ######## PLOTTING ########
