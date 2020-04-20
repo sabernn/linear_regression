@@ -40,7 +40,7 @@ def loss_func_der(inp,out,theta,alpha):
         y_hat=theta[0]+theta[1]*inp[i]
         y=out[i]
         dJ[0]+=alpha*(y-y_hat)*1/m
-        dJ[1]+=alpha*(y-y_hat)*x[i]/m
+        dJ[1]+=alpha*(y-y_hat)*inp[i]/m
 
     return dJ
 
@@ -91,25 +91,29 @@ for iter in range(n):
     Jtemp=round(Jtemp,5)
     print("{0} \t\t {1}".format(theta_r,Jtemp))
 print("----------------------------------------------------")
-
+print("The final theta learned: theta = [{0}, {1}]".format(theta[0],theta[1]))
+print("The corresponding loss function: J = {0}".format(J[-1]))
+print("----------------------------------------------------")
 xtest=[3.5,7]
 for t in xtest:
-    liv_area=t*1000
-    price=(theta[0]+theta[1]*t)*10000
+    liv_area=round(t*1000,2)
+    price=round((theta[0]+theta[1]*t)*10000,2)
     print("Aproximate house prices for {0} square feet living area is: ${1}".format(liv_area,price))
-
+print("----------------------------------------------------")
 
 ######## PLOTTING ########
 # Plotting the raw data
 plt.subplot(121)
+plt.title("Raw data")
 plt.plot(x,y,'bx')
 plt.xlabel('House living areas in 1000 square feet')
 plt.ylabel('House prices in 10,000 dollars')
 plt.grid(axis='both')
 
 
-# Plotting loss function vs 
+# Plotting loss function vs iterations
 plt.subplot(122)
+plt.title("J vs n")
 plt.plot(range(1,n+1),J)
 plt.xlabel('Iterations')
 plt.ylabel('Loss value (J)')
