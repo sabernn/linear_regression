@@ -98,7 +98,7 @@ xtest=[3.5,7]
 for t in xtest:
     liv_area=round(t*1000,2)
     price=round((theta[0]+theta[1]*t)*10000,2)
-    print("Aproximate house prices for {0} square feet living area is: ${1}".format(liv_area,price))
+    print("Aproximate house price for {0} square feet living area is: ${1}".format(liv_area,price))
 print("----------------------------------------------------")
 
 ######## PLOTTING ########

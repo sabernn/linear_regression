@@ -109,17 +109,17 @@ for i in range(5):
 x1s=standardize(x1)
 x2s=standardize(x2)
 x3s=standardize(x3)
-ys=standardize(y)
+
 xs=[[1.0]*len(x1s),x1s,x2s,x3s]
 print("--------------------------------------------------------------------------------------------")
 print("(2) First 5 rows of standardized data are: ")
 for i in range(5):
-    print("1\t{0}\t{1}\t{2}\t{3}".format(x1s[i],x2s[i],x3s[i],ys[i]))
+    print("1\t{0}\t{1}\t{2}\t{3}".format(x1s[i],x2s[i],x3s[i],y[i]))
 
 print("--------------------------------------------------------------------------------------------")
 # Checking the loss function implementation
 theta1=[0,0,0,0]
-print("The cost (J) value for theta = {0} is: J = {1}".format(theta1,loss_func(xs,ys,theta1)))
+print("The cost (J) value for theta = {0} is: J = {1}".format(theta1,loss_func(xs,y,theta1)))
 
 
 # Implementing Gradient Descent
@@ -130,13 +130,13 @@ print("-------------------------------------------------------------------------
 print("Theta \t\t\t\t\t\t\t\t Loss Function (J)")
 print("--------------------------------------------------------------------------------------------")
 for iter in range(n):
-    theta[0]+=loss_func_der(xs,ys,theta,alpha)[0]
-    theta[1]+=loss_func_der(xs,ys,theta,alpha)[1]
-    theta[2]+=loss_func_der(xs,ys,theta,alpha)[2]
-    theta[3]+=loss_func_der(xs,ys,theta,alpha)[3]
+    theta[0]+=loss_func_der(xs,y,theta,alpha)[0]
+    theta[1]+=loss_func_der(xs,y,theta,alpha)[1]
+    theta[2]+=loss_func_der(xs,y,theta,alpha)[2]
+    theta[3]+=loss_func_der(xs,y,theta,alpha)[3]
 
     # Printing the values of theta and J for each iteration
-    Jtemp=loss_func(xs,ys,theta)
+    Jtemp=loss_func(xs,y,theta)
     J.append(Jtemp)
     theta_r=[round(theta[0],5),round(theta[1],5),round(theta[2],5),round(theta[3],5)]
     Jtemp=round(Jtemp,5)
@@ -153,14 +153,15 @@ xtests[2]=standardize_s(liv_area,x2)
 lot_area=8550
 xtest=[n_bed,liv_area,lot_area]
 xtests[3]=standardize_s(lot_area,x3)
-price_s=(theta[0]+theta[1]*xtests[1]+theta[2]*xtests[2]+theta[3]*xtests[3])
-price=round(destandardize_s(price_s,y),2)
-print("Aproximate house prices for {0} is: ${1}".format(xtest,price))
+price=round((theta[0]+theta[1]*xtests[1]+theta[2]*xtests[2]+theta[3]*xtests[3]),2)
+
+print("Aproximate house price for {0} is: ${1}".format(xtest,price))
 print("--------------------------------------------------------------------------------------------")
 
 
 ######## PLOTTING ########
 # Plotting loss function vs 
+plt.title("J vs n")
 plt.plot(range(1,n+1),J)
 plt.xlabel('Iterations')
 plt.ylabel('Loss value (J)')
